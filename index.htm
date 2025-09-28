@@ -1,14 +1,709 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <title>zardasht</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap');
+
+    :root {
+      --bg1: #00ff22;
+      --bg2: #00ff55;
+      --social-bg: rgba(180, 180, 180, 0.2); /* پس‌زمینه خاکستری ملایم */
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg1), #00ff00);
+      color: #fff;
+      direction: rtl;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* قالب اصلی با موقعیت ثابت */
+    .main-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    .card {
+      background: rgba(73, 70, 70, 0.25);
+      border-radius: 14px;
+      padding: 42px 34px;
+      text-align: center;
+      box-shadow: 0 22px 40px rgba(71, 69, 69, 0.45);
+      backdrop-filter: blur(6px);
+      width: 100%;
+      z-index: 1;
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 44px;
+      font-weight: 800;
+      text-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .underline {
+      width: 60px;
+      height: 4px;
+      margin: 10px auto 18px;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.533), #000000);
+      border-radius: 2px;
+    }
+
+    p.lead {
+      margin: 0 0 20px;
+      font-weight: 600;
+      opacity: 0.95;
+    }
+
+    .icons {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: var(--social-bg); /* استفاده از رنگ پس‌زمینه ملایم */
+      box-shadow: 0 4px 12px rgba(150, 150, 150, 0.2);
+      text-decoration: none;
+      color: #fff;
+      font-size: 28px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      backdrop-filter: blur(2px);
+    }
+
+    .icon img {
+      width: 40px; /* کاهش سایز برای ظرافت بیشتر */
+      height: 40px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+      filter: brightness(0.9); /* کاهش شدت رنگ آیکون */
+    }
+
+    .icon span {
+      font-size: 12px;
+      margin-top: 8px;
+      display: block;
+      line-height: 1;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .icon:hover {
+      transform: scale(1.08);
+      background: rgba(200, 200, 200, 0.25); /* تغییر ملایم هنگام hover */
+      box-shadow: 0 6px 16px rgba(180, 180, 180, 0.3);
+    }
+
+    .icon:hover img {
+      transform: scale(1.1);
+      filter: brightness(1); /* افزایش جزئی شدت رنگ هنگام hover */
+    }
+
+    footer {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      opacity: 0.7;
+      z-index: 1;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* دکمه آیکون صدا */
+    .audio-icon-btn {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(123, 47, 247, 0.85);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(123, 47, 247, 0.7);
+      transition: all 0.3s ease;
+      z-index: 1100;
+    }
+
+    .audio-icon-btn:hover {
+      background: rgba(123, 47, 247, 1);
+      transform: scale(1.05);
+    }
+
+    .material-icons {
+      font-size: 28px;
+      user-select: none;
+    }
+
+    #visualizer {
+      position: absolute;
+      top: 600px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2px;
+      width: 365px;
+      height: 100px;
+      align-items: flex-end;
+      z-index: 1090;
+    }
+
+    /* انیمیشن وقتی صدا پخش می‌شود */
+    .audio-playing #visualizer .bar {
+      animation: wave 0.8s infinite alternate;
+    }
+
+    @keyframes wave {
+      0% { height: 10px; }
+      50% { height: 30px; }
+      100% { height: 50px; }
+    }
+
+    /* دکمه چت */
+    .chat-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(123, 47, 247, 0.85);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(123, 47, 247, 0.7);
+      transition: all 0.3s ease;
+      z-index: 1100;
+    }
+
+    .chat-btn:hover {
+      background: rgba(123, 47, 247, 1);
+      transform: scale(1.05);
+    }
+
+    /* فرم تماس */
+    .contact-form {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+    }
+
+    .contact-form.active {
+      display: block;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    .contact-form.closing {
+      animation: fadeOut 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { 
+        opacity: 0; 
+        transform: translate(-50%, -40%);
+      }
+      to { 
+        opacity: 1; 
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    @keyframes fadeOut {
+      from { 
+        opacity: 1; 
+        transform: translate(-50%, -50%);
+      }
+      to { 
+        opacity: 0; 
+        transform: translate(-50%, -40%);
+        display: none;
+      }
+    }
+
+    .form-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(123, 47, 247, 0.85);
+      color: white;
+      font-family: inherit;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .submit-btn:hover {
+      background: rgba(123, 47, 247, 1);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      transform: rotate(90deg);
+    }
+
+    /* Overlay */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+      animation: fadeInOverlay 0.3s ease;
+    }
+
+    .overlay.closing {
+      animation: fadeOutOverlay 0.3s ease forwards;
+    }
+
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOutOverlay {
+      from { opacity: 1; }
+      to { opacity: 0; display: none; }
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.4s ease-out;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 300px;
+      pointer-events: none;
+    }
+
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .notification i {
+      font-size: 1.2rem;
+      min-width: 20px;
+    }
+
+    .notification.success {
+      border-left: 4px solid #4CAF50;
+    }
+
+    .notification.error {
+      border-left: 4px solid #F44336;
+    }
+
+    /* رسپانسیو برای صفحات خیلی کوچک */
+    @media (max-width: 500px) {
+      .wrap {
+        padding: 10px;
+      }
+      .card {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 36px;
+      }
+      .icon {
+        width: 70px;
+        height: 70px;
+      }
+      .icon img {
+        width: 36px;
+        height: 36px;
+      }
+      #visualizer {
+        width: 300px;
+      }
+      .contact-form {
+        width: 95%;
+        padding: 20px 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>fox05</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam veniam fugit rem neque laudantium non aliquid nostrum. Perferendis sed suscipit, cum in quo, voluptas repudiandae nobis sit laudantium quia quidem?</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam veniam fugit rem neque laudantium non aliquid nostrum. Perferendis sed suscipit, cum in quo, voluptas repudiandae nobis sit laudantium quia quidem?</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam veniam fugit rem neque laudantium non aliquid nostrum. Perferendis sed suscipit, cum in quo, voluptas repudiandae nobis sit laudantium quia quidem?</p>
-<link rel="stylesheet" href="styles.css">
+  <div class="main-container">
+    <!-- دکمه کنترل صدا -->
+    <button class="audio-icon-btn" id="audioToggleBtn" title="قطع و وصل صدا">
+      <span class="material-icons" id="audioIcon">volume_off</span>
+    </button>
+
+    <!-- دکمه چت -->
+    <button class="chat-btn" id="chatBtn" title="ارسال پیام">
+      <span class="material-icons">chat</span>
+    </button>
+
+    <!-- پخش کننده صدا -->
+    <audio id="backgroundAudio" loop>
+      <source src="music/1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- محتوای اصلی -->
+    <div class="wrap">
+      <div class="card">
+        <h1>Zardasht</h1>
+        <div class="underline"></div>
+        <p class="lead">:About Me</p>
+
+        <div class="icons">
+          <a class="icon" href="https://t.me/foxxxx05" target="_blank" title="کانال تلگرام">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="لوگو تلگرام" />
+            <span>Chanel</span>
+          </a>
+          <a class="icon" href="https://t.me/icuagain" target="_blank" title="تلگرام">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="لوگو تلگرام" />
+            <span>PV</span>
+          </a>
+          <a class="icon" href="https://instagram.com/__.zardasht._" target="_blank" title="اینستاگرام">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="لوگو اینستاگرام" />
+            <span>Instagram</span>
+          </a>
+          
+      
+
+        </div>
+      </div>
+    </div>
+
+    <!-- فرم تماس -->
+    <div class="contact-form" id="contactForm">
+      <button class="close-btn" id="closeBtn">
+        <span class="material-icons">close</span>
+      </button>
+      <h2 class="form-title">ارسال پیام 
+        (  ترجیحا با VPN)</h2>
+      <form id="messageForm">
+        <div class="form-group">
+          <label for="name" class="form-label">نام شما (الزامی)</label>
+          <input type="text" id="name" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label">ایمیل (اختیاری)</label>
+          <input type="email" id="email" class="form-input">
+        </div>
+        <div class="form-group">
+          <label for="message" class="form-label">پیام شما (الزامی)</label>
+          <textarea id="message" class="form-input form-textarea" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">ارسال پیام</button>
+      </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+      <i></i>
+      <span id="notificationText"></span>
+    </div>
+  </div>
+
+  <footer> Create By Zardasht </footer>
+
+  <script>
+
+// تغییر آدرس API به همراه پروکسی
+const proxyUrl = 'https://your-proxy-server.iran/telegram-proxy.php'; // باید این فایل را روی هاست ایرانی آپلود کنید
+const requestData = {
+  token: 'YOUR_BOT_TOKEN',
+  chat_id: 'YOUR_CHAT_ID',
+  text: 'متن پیام شما'
+};
+
+fetch(proxyUrl, {
+  method: 'POST',
+  body: JSON.stringify(requestData)
+})
+
+
+
+
+    // کنترل صدا
+    const audio = document.getElementById('backgroundAudio');
+    const audioBtn = document.getElementById('audioToggleBtn');
+    const audioIcon = document.getElementById('audioIcon');
+
+    audioBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        audioIcon.textContent = 'volume_up';
+        document.body.classList.add('audio-playing');
+      } else {
+        audio.pause();
+        audioIcon.textContent = 'volume_off';
+        document.body.classList.remove('audio-playing');
+      }
+    });
+
+    // پخش خودکار صدا (با اجازه کاربر)
+    document.addEventListener('click', () => {
+      audio.play().then(() => {
+        audioIcon.textContent = 'volume_up';
+        document.body.classList.add('audio-playing');
+      }).catch(e => console.log('اتوماتیک پخش نشد، نیاز به کلیک کاربر'));
+    }, { once: true });
+
+    // Contact form handling
+    const chatBtn = document.getElementById('chatBtn');
+    const contactForm = document.getElementById('contactForm');
+    const overlay = document.getElementById('overlay');
+    const closeBtn = document.getElementById('closeBtn');
+    const messageForm = document.getElementById('messageForm');
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notificationText');
+    
+    // Show contact form
+    chatBtn.addEventListener('click', function() {
+        contactForm.classList.add('active');
+        overlay.classList.add('active');
+    });
+    
+    // Hide contact form with animation
+    function closeForm() {
+        contactForm.classList.add('closing');
+        overlay.classList.add('closing');
+        
+        setTimeout(() => {
+            contactForm.classList.remove('active', 'closing');
+            overlay.classList.remove('active', 'closing');
+        }, 300);
+    }
+    
+    closeBtn.addEventListener('click', closeForm);
+    overlay.addEventListener('click', closeForm);
+    
+    // Show notification
+    function showNotification(message, isSuccess) {
+        // Reset notification state
+        notification.style.display = 'flex';
+        notification.className = 'notification';
+        notification.classList.add(isSuccess ? 'success' : 'error');
+        
+        // Update content
+        notificationText.textContent = message;
+        const icon = notification.querySelector('i');
+        icon.className = isSuccess ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+        
+        // Trigger show animation
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Auto-hide after 3 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 400);
+        }, 3000);
+    }
+    
+    // Handle form submission
+    messageForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value || 'Not provided';
+        const message = document.getElementById('message').value;
+        
+        // اطلاعات ربات تلگرام
+        const botToken = '7676508338:AAEWEfCNjKM4gfXbNpJX8f2AOS69J4AIpkw';
+        const chatId = '924512547';
+        
+        // اعتبارسنجی اولیه
+        if(!name || !message) {
+            showNotification('لطفاً تمام فیلدهای ضروری را پر کنید', false);
+            return;
+        }
+
+        showNotification('در حال ارسال پیام...', true);
+        
+const text = `✨ *پیام جدید از وبسایت* ✨
+━━━━━━━━━━━━━━
+👤 *نام:* ${name}
+📝 *پیام:*
+${message}
+━━━━━━━━━━━━━━
+⏰ *زمان:* ${new Date().toLocaleString('fa-IR')}
+🆔 *کد پیام:* ${Math.floor(Math.random() * 90000) + 10000}`;
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: text,
+                    parse_mode: 'HTML'
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.ok) {
+                showNotification('پیام با موفقیت ارسال شد!', true);
+                messageForm.reset();
+                closeForm();
+            } else {
+                let errorMsg = 'ارسال پیام ناموفق بود';
+                if(data.description) {
+                    errorMsg += `: ${data.description}`;
+                }
+                showNotification(errorMsg, false);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('خطای اتصال. لطفاً بعداً تلاش کنید.', false);
+        }
+    });
+
+    // Disable right click
+    document.oncontextmenu = new Function("return false");
+  </script>
 </body>
 </html>
